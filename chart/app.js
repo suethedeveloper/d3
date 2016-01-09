@@ -10,7 +10,7 @@ var xSacle = d3.scale.ordinal()
               .domain(d3.range(0, barData.length))
               .rangeBands([0, width]);              
 var colors = d3.scale.linear()
-              .domain([0, d3.max(barData)])
+              .domain([0, barData.length])
               .range(['#ffb832', '#c61c6f']);
 
 d3.select("#chart")
@@ -19,7 +19,7 @@ d3.select("#chart")
     .style('background', '#c9d7d6')
       .selectAll('rect').data(barData)
       .enter().append('rect')
-        .style('fill', colors)
+        .style('fill', function(d, i){return colors(i);})
         .attr({
               // 'width': barWidth,
               'width': xSacle.rangeBand(),
