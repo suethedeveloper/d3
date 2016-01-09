@@ -1,7 +1,8 @@
+var barData = [];
+for (var i = 0; i < 50; i++) {
+ barData.push(Math.random()*30); 
+}
 
-
-//Quantative Scale - yScale
-var barData = [20, 30, 45, 15, 50, 30, 7, 23,20, 30, 45, 15, 50, 30, 7, 23];
 var height = 400, width = 600, barWidth = 50, barOffset = 5;
 var yScale = d3.scale.linear()
               .domain([0, d3.max(barData)])
