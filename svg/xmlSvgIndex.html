@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D3 Graphic</title>
+  <link rel="stylesheet" href="../lib/base.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>D3 Graphic</h2>
+    <!-- svg is xml based so all open tag has to be closed with '/>' -->
+    <svg width="600" height="400" style="background: #93a1a1">
+      <rect x="250" y="150" width="100" height="100" style="fill: #c61c6f" />
+      <circle cx="300" cy="200" r="50" style="fill: #840043" /><!-- cx-center x location, r-radius-->
+      <text x="10" y="390" font-family="sans-serif" font-size="25" fill="#fff">
+        SVG Graphics - XML version of svg graphic
+      </text>
+      <g id="triangle"><!-- g - group of elements -->
+        <polyline points="10 35, 30 10, 50 35" style="fill: #f7b330" />
+        <!-- <polyline points="10 35, 50 10, 50 35" style="fill: #f7b330" /> -->
+      </g>
+      <use xlink:href="#triangle" x="30" y="0" /><!-- make copy of id="triangle" and positioning at the wherever location using <use> tag -->
+    </svg>
+  </div>
+  
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="app.js"></script>
+</body>
+</html>

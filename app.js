@@ -43,14 +43,19 @@
 //   }); 
 
 var myStyle = [
-  { width: 200, color: '#268bd2'},
-  { width: 230, color: '#bd3613'},
-  { width: 220, color: '#a57706'},
-  { width: 290, color: '#2176c7'}
+  { width: 200, name: 'Sue Park', color: '#268bd2'},
+  { width: 230, name: 'Jane Kim', color: '#bd3613'},
+  { width: 220, name: 'Paul Jung', color: '#a57706'},
+  { width: 290, name: 'Andy Lee', color: '#2176c7'}
 ];
 
-d3.selectAll('.item')
+d3.selectAll('#chart').selectAll('div')
   .data(myStyle)
+  .enter().append('div')
+  .classed('item', true)
+  .text(function(d){
+    return d.name;
+  })
   .style({
     'color': '#fff',
     'background': function(d){
