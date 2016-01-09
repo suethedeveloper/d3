@@ -1,7 +1,7 @@
 
 
 //Quantative Scale - yScale
-var barData = [20, 30, 45, 15, 50, 30, 7, 23];
+var barData = [20, 30, 45, 15, 50, 30, 7, 23,20, 30, 45, 15, 50, 30, 7, 23];
 var height = 400, width = 600, barWidth = 50, barOffset = 5;
 var yScale = d3.scale.linear()
               .domain([0, d3.max(barData)])
@@ -10,8 +10,8 @@ var xSacle = d3.scale.ordinal()
               .domain(d3.range(0, barData.length))
               .rangeBands([0, width]);              
 var colors = d3.scale.linear()
-              .domain([0, barData.length])
-              .range(['#ffb832', '#c61c6f']);
+              .domain([0, barData.length * .33, barData.length * .66, barData.length])
+              .range(['#ffb832', '#c61c6f', '#268bd2', '#85992c']);
 
 d3.select("#chart")
   .append("svg")
