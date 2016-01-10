@@ -1,5 +1,5 @@
 var barData = [];
-for (var i = 0; i < 50; i++) {
+for (var i = 0; i < 100; i++) {
  barData.push(Math.random()*30); 
 }
 
@@ -30,8 +30,12 @@ d3.select("#chart")
               'x': function(d, i){ return xSacle(i); },
               // 'y': function(d){ return height-d; }
               'y': function(d){ return height - yScale(d); }
-        });
-        // .attr('width', barWidth)
-        // .attr('height', function(d){ return d;})
-        // .attr('x', function(d, i){ return i * (barWidth+barOffset);})
-        // .attr('y', function(d){ return height-d; });
+        })
+      .on('mouseover', function(d){
+        d3.select(this)
+          .style('opacity', .5);
+      })
+      .on('mouseout', function(d){
+        d3.select(this)
+          .style('opacity', 1);
+      });
