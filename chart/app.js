@@ -3,7 +3,7 @@ for (var i = 0; i < 100; i++) {
  barData.push(Math.random()*30); 
 }
 
-var height = 400, width = 600, barWidth = 50, barOffset = 5;
+var height = 400, width = 600, barWidth = 50, barOffset = 5, tempColor;
 var yScale = d3.scale.linear()
               .domain([0, d3.max(barData)])
               .range([0, height]);
@@ -32,10 +32,17 @@ d3.select("#chart")
               'y': function(d){ return height - yScale(d); }
         })
       .on('mouseover', function(d){
+        tempColor = this.style.fill;
         d3.select(this)
-          .style('opacity', .5);
+          // .transition()
+          // .transition().duration(1000)
+          // .transition().delay(100).duration(800)
+          .style('opacity', '.5')
+          .style('fill', 'yellow');
       })
       .on('mouseout', function(d){
         d3.select(this)
-          .style('opacity', 1);
+          // .transition()
+          .style('opacity', 1)
+          .style('fill', tempColor);
       });
