@@ -1,7 +1,10 @@
 var barData = [];
-for (var i = 0; i < 100; i++) {
- barData.push(Math.round(Math.random()*30)+2); 
+
+for (var i = 0; i < 50; i++) {
+ barData.push(Math.round(Math.random()*30)+1); 
 }
+
+barData.sort(function compareNumbers(a,b){ return a-b; });
 
 var height = 400, width = 600, barWidth = 50, barOffset = 5, tempColor;
 var yScale = d3.scale.linear()
@@ -19,33 +22,32 @@ var tooltip = d3.select('body').append('div')
                 .style('background', 'white')
                 .style('opacity', 0);
 
-var myChart = d3.select("#chart")
-  .append("svg")
-    .attr({'width': width, 'height': height})
-      .selectAll('rect').data(barData)
-      .enter().append('rect')
-        .style('fill', function(d, i){return colors(i);})
-        .attr({
-              'width': xSacle.rangeBand(),
-              'height': 0,              
-              'x': function(d, i){ return xSacle(i); },
-              'y': height
-        })
-      .on('mouseover', function(d){
-        tooltip.transition().style('opacity', '.9');
-        tooltip.html(d)
-          .style('left', (d3.event.pageX) + 'px')
-          .style('top', (d3.event.pageY) + 'px');
-        tempColor = this.style.fill;
-        d3.select(this)
-          .style('opacity', '.5')
-          .style('fill', 'yellow');
-      })
-      .on('mouseout', function(d){
-        d3.select(this)
-          .style('opacity', 1)
-          .style('fill', tempColor);
-      });
+var myChart = d3.select("#chart").append("svg")
+  .attr('width', width)
+  .attr('height', height)
+  .append('g')
+    .selectAll('rect').data(barData)
+    .enter().append('rect')
+      .style('fill', function(d, i){return colors(i);})
+      .attr('width', xSacle.rangeBand())
+      .attr('height', 0)
+      .attr('x', function(d, i){ return xSacle(i); })
+      .attr('y', height)
+    .on('mouseover', function(d){
+      tooltip.transition().style('opacity', '.9');
+      tooltip.html(d)
+        .style('left', (d3.event.pageX) + 'px')
+        .style('top', (d3.event.pageY) + 'px');
+      tempColor = this.style.fill;
+      d3.select(this)
+        .style('opacity', '.5')
+        .style('fill', 'yellow');
+    })
+    .on('mouseout', function(d){
+      d3.select(this)
+        .style('opacity', 1)
+        .style('fill', tempColor);
+    });
 
 myChart.transition()
   .attr({
@@ -55,4 +57,4 @@ myChart.transition()
   // .delay(20);     
   .delay(function(d, i){ return i * 20; })
   .duration(1000)
-  .ease('elastic');
+  .ease('elastic'); 
