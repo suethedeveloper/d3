@@ -1,18 +1,25 @@
 var barData = [];
 
-for (var i = 0; i < 10; i++) {
+for (var i = 0; i < 20; i++) {
  barData.push(Math.round(Math.random()*30)); 
 }
 
 barData.sort(function compareNumbers(a,b){ return a-b; });
 
-var height = 400, width = 600, barWidth = 50, barOffset = 5, tempColor;
+var margin = {top: 30, right: 30, bottom: 40, left: 50};
+var height = 400 - margin.top - margin.bottom, 
+    width = 600 - margin.right - margin.left, 
+    barWidth = 50, 
+    barOffset = 5, 
+    tempColor;
+
 var yScale = d3.scale.linear()
               .domain([0, d3.max(barData)])
               .range([0, height]);
 var xSacle = d3.scale.ordinal()
               .domain(d3.range(0, barData.length))
-              .rangeBands([0, width]);              
+              // .rangeBands([0, width]); 
+               .rangeBands([0, width], 0.05, 0);//2nd argument: space btw bar, 3rd argument: margins at the beginning and end of bar group
 var colors = d3.scale.linear()
               .domain([0, barData.length * .33, barData.length * .66, barData.length])
               .range(['#ffb832', '#c61c6f', '#268bd2', '#85992c']);
@@ -23,9 +30,11 @@ var tooltip = d3.select('body').append('div')
                 .style('opacity', 0);
 
 var myChart = d3.select("#chart").append("svg")
-  .attr('width', width)
-  .attr('height', height)
+  .style('background', '#e7e0cb')
+  .attr('width', width + margin.right + margin.left)
+  .attr('height', height + margin.top + margin.bottom)
   .append('g')
+    .attr('transform', 'translate('+ margin.left +','+ margin.top +')')
     .selectAll('rect').data(barData)
     .enter().append('rect')
       .style('fill', function(d, i){return colors(i);})
@@ -70,7 +79,7 @@ myChart.transition()
 
 var vGuide = d3.select('svg').append('g');              
     vAxis(vGuide);
-    vGuide.attr('transform', 'translate(35, 0)');
+    vGuide.attr('transform', 'translate('+ margin.left +', '+ margin.top +')');
     vGuide.selectAll('path')
       .style({fill: 'none', stroke: '#000'});
     vGuide.selectAll('line')
@@ -84,7 +93,8 @@ var hAxis = d3.svg.axis()
               })); 
 var hGuide = d3.select('svg').append('g');
     hAxis(hGuide);
-    hGuide.attr('transform', 'translate(0, ' + (height-30) +')');
+    // hGuide.attr('transform', 'translate(0, ' + (height-30) +')');
+    hGuide.attr('transform', 'translate('+ margin.left +', '+ (margin.top + height) +')');
     hGuide.selectAll('path')
       .style({fill: 'none', stroke: '#000'});
     hGuide.selectAll('line')
