@@ -57,4 +57,21 @@ myChart.transition()
   // .delay(20);     
   .delay(function(d, i){ return i * 20; })
   .duration(1000)
-  .ease('elastic'); 
+  .ease('elastic');
+
+ var vGuideScale = d3.scale.linear()
+      .domain([0, d3.max(barData)])
+      .range([height, 0]);
+  
+ var vAxis = d3.svg.axis()
+              .scale(vGuideScale)
+              .orient('left')
+              .ticks(10);
+
+var vGuide = d3.select('svg').append('g');              
+    vAxis(vGuide);
+    vGuide.attr('transform', 'translate(35, 0)');
+    vGuide.selectAll('path')
+      .style({fill: 'none', stroke: '#000'});
+    vGuide.selectAll('line')
+      .style({ stroke: '#000'});
