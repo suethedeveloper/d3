@@ -45,4 +45,6 @@ myChart.transition()
               'y': function(d){ return height - yScale(d); }
         })
   // .delay(20);     
-  .delay(function(d, i){ return i * 20; });
+  .delay(function(d, i){ return i * 20; })
+  .duration(1000)
+  .ease('elastic');
