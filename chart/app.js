@@ -14,7 +14,7 @@ var colors = d3.scale.linear()
               .domain([0, barData.length * .33, barData.length * .66, barData.length])
               .range(['#ffb832', '#c61c6f', '#268bd2', '#85992c']);
 
-d3.select("#chart")
+var myChart = d3.select("#chart")
   .append("svg")
     .attr({'width': width, 'height': height})
     // .style('background', '#c9d7d6')
@@ -22,27 +22,27 @@ d3.select("#chart")
       .enter().append('rect')
         .style('fill', function(d, i){return colors(i);})
         .attr({
-              // 'width': barWidth,
               'width': xSacle.rangeBand(),
-              // 'height': function(d){ return d;},
-              'height': function(d){ return yScale(d);},              
-              // 'x': function(d, i){ return i * (barWidth+barOffset); },
+              'height': 0,              
               'x': function(d, i){ return xSacle(i); },
-              // 'y': function(d){ return height-d; }
-              'y': function(d){ return height - yScale(d); }
+              'y': height
         })
       .on('mouseover', function(d){
         tempColor = this.style.fill;
         d3.select(this)
-          // .transition()
-          // .transition().duration(1000)
-          // .transition().delay(100).duration(800)
           .style('opacity', '.5')
           .style('fill', 'yellow');
       })
       .on('mouseout', function(d){
         d3.select(this)
-          // .transition()
           .style('opacity', 1)
           .style('fill', tempColor);
       });
+
+myChart.transition()
+  .attr({
+              'height': function(d){ return yScale(d);},              
+              'y': function(d){ return height - yScale(d); }
+        })
+  // .delay(20);     
+  .delay(function(d, i){ return i * 20; });
