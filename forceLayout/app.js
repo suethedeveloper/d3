@@ -67,7 +67,39 @@ node.append('circle')
     .attr('cx', function(d){return d.x;})
     .attr('cy', function(d){return d.y;})
     .attr('r', circleWidth)
-    .attr('fill', palette.pink);
+    //.attr('fill', palette.pink);
+    .attr('fill', function(d, i){
+        if (i>0) return palette.yellowgreen;
+        else return palette.orange;
+    });
+
+//adding text to each node
+node.append('text')
+    .text(function(d){return d.name})
+    .attr('font-family', 'Roboto Slab')
+    //.attr('fill', palette.blue)
+    .attr('fill', function(d, i){
+        if (i>0) return palette.yellowgreen;
+        else return palette.orange;
+    })
+    .attr('x', function(d, i){
+        if (i>0) return circleWidth+4;
+        else return circleWidth-15;
+    })
+    .attr('y', function(d, i){
+        if (i>0) return circleWidth;
+        else return 8;
+    })
+    //.attr('text-anchor', 'end')
+    .attr('text-anchor', function(d, i){
+        if (i>0) return 'beginning';
+        else return 'end';
+    })
+    //.attr('font-size', '1em');
+    .attr('font-size', function(d, i){
+        if (i>0) return '1em';
+        else return '1.5em';
+    });
 
 //animated over the time
 force.on('tick', function(e){
